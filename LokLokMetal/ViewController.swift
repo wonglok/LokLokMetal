@@ -7,22 +7,32 @@
 //
 
 import UIKit
+import MetalKit
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        
-    
-    }
-
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
-//    }
-
-
+enum Colors {
+    static let wenderlichGreen = MTLClearColor(red: 0.0,
+                                               green: 0.4,
+                                               blue: 0.21,
+                                               alpha: 1.0)
 }
 
+class ViewController: UIViewController {
+    
+    var metalView: MTKView {
+        return view as! MTKView
+    }
+    
+    var renderer: Renderer?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        metalView.device = MTLCreateSystemDefaultDevice()
+        guard let device = metalView.device else {
+            fatalError("Device not created. Run on a physical device")
+        }
+        
+        metalView.clearColor =  Colors.wenderlichGreen
+        renderer = Renderer(device: device)
+        metalView.delegate = renderer
+    }
+}
