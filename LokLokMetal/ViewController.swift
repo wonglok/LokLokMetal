@@ -14,7 +14,23 @@ enum Colors {
                                                green: 0.4,
                                                blue: 0.21,
                                                alpha: 1.0)
+    static let white = MTLClearColor(red: 1.0,
+                                     green: 1.0,
+                                     blue: 1.0,
+                                     alpha: 1.0)
+    
+    static let black = MTLClearColor(red: 0.0,
+                                     green: 0.0,
+                                     blue: 0.0,
+                                     alpha: 1.0)
+    
+    static let transparent = MTLClearColor(red: 0.0,
+                                     green: 0.0,
+                                     blue: 0.0,
+                                     alpha: 0.0)
+
 }
+
 
 class ViewController: UIViewController {
     
