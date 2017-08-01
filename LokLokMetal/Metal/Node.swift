@@ -18,6 +18,15 @@ class Node {
     var vertexCount: Int
     var vertexBuffer: MTLBuffer!
     
+    var positionX: Float = 0.0
+    var positionY: Float = 0.0
+    var positionZ: Float = 0.0
+    
+    var rotationX: Float = 0.0
+    var rotationY: Float = 0.0
+    var rotationZ: Float = 0.0
+    var scale: Float     = 1.0
+    
     init(name: String, vertices: [Vertex], device: MTLDevice){
         
         // 1
@@ -37,6 +46,22 @@ class Node {
         vertexCount = vertices.count
     }
     
+    func handleMatrix (renderEncoder: MTLRenderCommandEncoder) {
+        // 1
+        let nodeModelMatrix = self.modelMatrix()
+        
+        let memoryLength = MemoryLayout<Float>.size * Matrix4.numberOfElements()
+        
+        // 2
+        let uniformBuffer = device.makeBuffer(length: memoryLength, options: [])
+        // 3
+        let bufferPointer = uniformBuffer?.contents()
+        // 4
+        memcpy(bufferPointer, nodeModelMatrix.raw(), memoryLength)
+        // 5
+        renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
+    }
+    
     func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, clearColor: MTLClearColor?){
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
@@ -51,12 +76,23 @@ class Node {
         let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        
+        handleMatrix(renderEncoder: renderEncoder)
+        
         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount,
                                      instanceCount: vertexCount/3)
         renderEncoder.endEncoding()
         
         commandBuffer.present(drawable)
         commandBuffer.commit()
+    }
+    
+    func modelMatrix() -> Matrix4 {
+        let matrix = Matrix4()
+        matrix.translate(positionX, y: positionY, z: positionZ)
+        matrix.rotateAroundX(rotationX, y: rotationY, z: rotationZ)
+        matrix.scale(scale, y: scale, z: scale)
+        return matrix
     }
     
 }

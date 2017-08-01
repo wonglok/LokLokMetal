@@ -6,6 +6,9 @@
 //  Copyright © 2017 WONG LOK. All rights reserved.
 //
 
+// https://www.raywenderlich.com/146416/metal-tutorial-swift-3-part-2-moving-3d
+// https://koenig-media.raywenderlich.com/uploads/2014/10/Cube__PSF_.png
+
 import Foundation
 import Metal
 
