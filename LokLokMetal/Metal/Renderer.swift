@@ -16,11 +16,11 @@ struct LokVertex {
 class Renderer: NSObject {
     let device: MTLDevice!
     let commandQueue: MTLCommandQueue!
-    var vertexBuffer: MTLBuffer!
     
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     var pipelineState: MTLRenderPipelineState!
     
+    var objectToDraw: Triangle!
     
     init(device: MTLDevice) {
         self.device = device
@@ -41,13 +41,7 @@ class Renderer: NSObject {
         pipelineDescriptor.fragmentFunction = fragmentFunc;
     }
     func makeBuffers () {
-        let vertexData:[Float] = [
-            0.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0,
-            1.0, -1.0, 0.0]
-        
-        let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]) // 1
-        vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: []) // 2
+        objectToDraw = Triangle(device: device)
     }
     func makeLib () {
         // 1
@@ -70,19 +64,26 @@ extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
     func draw(in view: MTKView) {
-        guard   let drawable = view.currentDrawable,
-                let descriptor = view.currentRenderPassDescriptor,
-                let commandBuffer = commandQueue.makeCommandBuffer(),
-                let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+        guard   let drawable = view.currentDrawable // ,
+                //let descriptor = view.currentRenderPassDescriptor
+                //let commandBuffer = commandQueue.makeCommandBuffer(),
+                //let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         else { return }
         
-        commandEncoder.setRenderPipelineState(pipelineState)
-        commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        commandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+        objectToDraw.render(
+            commandQueue: commandQueue,
+            pipelineState: pipelineState,
+            drawable: drawable,
+            clearColor: nil
+        )
         
-        commandEncoder.endEncoding()
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
+//        commandEncoder.setRenderPipelineState(pipelineState)
+//        commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+//        commandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+
+//        commandEncoder.endEncoding()
+//        commandBuffer.present(drawable)
+//        commandBuffer.commit()
         
     }
 }

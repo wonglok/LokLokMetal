@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2050BD41F311FDF006D23E6 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2050BD31F311FDF006D23E6 /* Triangle.swift */; };
+		E2050BD61F3122BB006D23E6 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2050BD51F3122BB006D23E6 /* Cube.swift */; };
 		E2910F761F30744D0077A6D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F751F30744D0077A6D1 /* AppDelegate.swift */; };
 		E2910F781F30744D0077A6D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F771F30744D0077A6D1 /* ViewController.swift */; };
 		E2910F7B1F30744D0077A6D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2910F791F30744D0077A6D1 /* Main.storyboard */; };
 		E2910F7D1F30744D0077A6D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2910F7C1F30744D0077A6D1 /* Assets.xcassets */; };
 		E2910F801F30744D0077A6D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2910F7E1F30744D0077A6D1 /* LaunchScreen.storyboard */; };
 		E2910F891F3077090077A6D1 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F881F3077090077A6D1 /* Renderer.swift */; };
+		E2910F8B1F307F2C0077A6D1 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = E2910F8A1F307F2C0077A6D1 /* Shaders.metal */; };
+		E2910F921F3081FD0077A6D1 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = E2910F901F3081FD0077A6D1 /* Matrix4.m */; };
+		E2910F941F3082BC0077A6D1 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F931F3082BC0077A6D1 /* Vertex.swift */; };
+		E2910F961F3082F50077A6D1 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F951F3082F50077A6D1 /* Node.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E2050BD31F311FDF006D23E6 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		E2050BD51F3122BB006D23E6 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		E2910F721F30744D0077A6D1 /* LokLokMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LokLokMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2910F751F30744D0077A6D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2910F771F30744D0077A6D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +32,12 @@
 		E2910F7F1F30744D0077A6D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2910F811F30744D0077A6D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2910F881F3077090077A6D1 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		E2910F8A1F307F2C0077A6D1 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		E2910F8F1F3081FB0077A6D1 /* LokLokMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LokLokMetal-Bridging-Header.h"; sourceTree = "<group>"; };
+		E2910F901F3081FD0077A6D1 /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Matrix4.m; path = ../../../../../../../../AppleData/Download/matrix4_Metal_2/Matrix4.m; sourceTree = "<group>"; };
+		E2910F911F3081FD0077A6D1 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Matrix4.h; path = ../../../../../../../../AppleData/Download/matrix4_Metal_2/Matrix4.h; sourceTree = "<group>"; };
+		E2910F931F3082BC0077A6D1 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		E2910F951F3082F50077A6D1 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +51,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2050BD21F311FB3006D23E6 /* Renderable */ = {
+			isa = PBXGroup;
+			children = (
+				E2050BD31F311FDF006D23E6 /* Triangle.swift */,
+				E2050BD51F3122BB006D23E6 /* Cube.swift */,
+			);
+			path = Renderable;
+			sourceTree = "<group>";
+		};
 		E2910F691F30744D0077A6D1 = {
 			isa = PBXGroup;
 			children = (
@@ -63,6 +86,7 @@
 				E2910F7C1F30744D0077A6D1 /* Assets.xcassets */,
 				E2910F7E1F30744D0077A6D1 /* LaunchScreen.storyboard */,
 				E2910F811F30744D0077A6D1 /* Info.plist */,
+				E2910F8C1F3081BC0077A6D1 /* SupportingFiles */,
 			);
 			path = LokLokMetal;
 			sourceTree = "<group>";
@@ -70,9 +94,23 @@
 		E2910F871F3076F50077A6D1 /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				E2050BD21F311FB3006D23E6 /* Renderable */,
 				E2910F881F3077090077A6D1 /* Renderer.swift */,
+				E2910F8A1F307F2C0077A6D1 /* Shaders.metal */,
+				E2910F931F3082BC0077A6D1 /* Vertex.swift */,
+				E2910F951F3082F50077A6D1 /* Node.swift */,
 			);
 			path = Metal;
+			sourceTree = "<group>";
+		};
+		E2910F8C1F3081BC0077A6D1 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E2910F911F3081FD0077A6D1 /* Matrix4.h */,
+				E2910F901F3081FD0077A6D1 /* Matrix4.m */,
+				E2910F8F1F3081FB0077A6D1 /* LokLokMetal-Bridging-Header.h */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,6 +145,7 @@
 				TargetAttributes = {
 					E2910F711F30744D0077A6D1 = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -146,9 +185,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2910F8B1F307F2C0077A6D1 /* Shaders.metal in Sources */,
+				E2910F921F3081FD0077A6D1 /* Matrix4.m in Sources */,
 				E2910F781F30744D0077A6D1 /* ViewController.swift in Sources */,
 				E2910F891F3077090077A6D1 /* Renderer.swift in Sources */,
 				E2910F761F30744D0077A6D1 /* AppDelegate.swift in Sources */,
+				E2050BD61F3122BB006D23E6 /* Cube.swift in Sources */,
+				E2910F941F3082BC0077A6D1 /* Vertex.swift in Sources */,
+				E2910F961F3082F50077A6D1 /* Node.swift in Sources */,
+				E2050BD41F311FDF006D23E6 /* Triangle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,11 +330,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 6FDQ7639HM;
 				INFOPLIST_FILE = LokLokMetal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wonglok.LokLokMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LokLokMetal/SupportingFiles/LokLokMetal-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -299,11 +347,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 6FDQ7639HM;
 				INFOPLIST_FILE = LokLokMetal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wonglok.LokLokMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LokLokMetal/SupportingFiles/LokLokMetal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -328,6 +378,7 @@
 				E2910F861F30744D0077A6D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
