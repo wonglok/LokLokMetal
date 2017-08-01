@@ -22,22 +22,36 @@ class Renderer: NSObject {
     
 //    var objectToDraw: Triangle!
     var objectToDraw: Cube!
+    var projectionMatrix: Matrix4!
+    
 
-    init(device: MTLDevice) {
+
+    init(device: MTLDevice, view: UIView) {
         self.device = device
         commandQueue = device.makeCommandQueue()
         super.init()
-        makeBuffers()
         makeLib()
+        makeCamera(view: view)
+        makeBuffers()
     }
-
+    
+    func makeCamera (view: UIView) {
+        projectionMatrix = Matrix4.makePerspectiveViewAngle(
+            Matrix4.degrees(toRad: 85.0),
+            aspectRatio: Float(view.bounds.size.width / view.bounds.size.height),
+            nearZ: 0.01,
+            farZ: 100.0
+        )
+    }
+    
     func makeBuffers () {
         objectToDraw = Cube(device: device)
-                
-        objectToDraw.positionX = -0.25
-        objectToDraw.rotationZ = Matrix4.degrees(toRad: 45)
-        objectToDraw.scale = 0.5
         
+        objectToDraw.positionX =  0.0
+        objectToDraw.positionY =  0.0
+        objectToDraw.positionZ = -2.0
+        objectToDraw.rotationZ = Matrix4.degrees(toRad: 45);
+        objectToDraw.scale = 0.5
     }
     func makeLib () {
         // 1
@@ -70,9 +84,9 @@ extension Renderer: MTKViewDelegate {
             commandQueue: commandQueue,
             pipelineState: pipelineState,
             drawable: drawable,
+            projectionMatrix: projectionMatrix,
             clearColor: nil
         )
-        
         
         
     }

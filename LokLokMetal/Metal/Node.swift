@@ -11,6 +11,10 @@ import Metal
 import MetalKit
 import QuartzCore
 
+struct Uniforms {
+    
+}
+
 class Node {
     
     let device: MTLDevice
@@ -46,23 +50,24 @@ class Node {
         vertexCount = vertices.count
     }
     
-    func handleMatrix (renderEncoder: MTLRenderCommandEncoder) {
+    func handleMatrix (renderEncoder: MTLRenderCommandEncoder, projectionMatrix: Matrix4) {
         // 1
         let nodeModelMatrix = self.modelMatrix()
         
         let memoryLength = MemoryLayout<Float>.size * Matrix4.numberOfElements()
         
         // 2
-        let uniformBuffer = device.makeBuffer(length: memoryLength, options: [])
-        // 3
-        let bufferPointer = uniformBuffer?.contents()
-        // 4
-        memcpy(bufferPointer, nodeModelMatrix.raw(), memoryLength)
-        // 5
+        let uniformBuffer = device.makeBuffer(length: memoryLength * 2, options: [])
+        
+        let uniformPointer = uniformBuffer?.contents()
+        
+        memcpy(uniformPointer, nodeModelMatrix.raw(), memoryLength)
+        memcpy(uniformPointer?.advanced(by: memoryLength), projectionMatrix.raw(), memoryLength)
+        
         renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
     }
     
-    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, clearColor: MTLClearColor?){
+    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, projectionMatrix: Matrix4, clearColor: MTLClearColor?){
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -77,10 +82,15 @@ class Node {
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         
-        handleMatrix(renderEncoder: renderEncoder)
+        handleMatrix(renderEncoder: renderEncoder, projectionMatrix: projectionMatrix)
         
-        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount,
-                                     instanceCount: vertexCount/3)
+        renderEncoder.drawPrimitives(
+                                        type: .triangle,
+                                        vertexStart: 0,
+                                        vertexCount: vertexCount,
+                                        instanceCount: vertexCount / 3
+                                    )
+        
         renderEncoder.endEncoding()
         
         commandBuffer.present(drawable)

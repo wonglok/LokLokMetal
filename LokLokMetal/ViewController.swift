@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     var metalView: MTKView {
         return view as! MTKView
     }
-    
+
     var renderer: Renderer?
     
     override func viewDidLoad() {
@@ -48,7 +48,13 @@ class ViewController: UIViewController {
         }
         
         metalView.clearColor =  Colors.wenderlichGreen
-        renderer = Renderer(device: device)
+        renderer = Renderer(device: device, view: view)
         metalView.delegate = renderer
     }
 }
+
+
+
+
+
+
