@@ -48,7 +48,7 @@ class Renderer: NSObject {
     }
     
     func makeRenderable () {
-        objectToDraw = Cube(device: device)
+        objectToDraw = Cube(device: device, commandQ:commandQueue)
     }
     func makeLib () {
         // 1

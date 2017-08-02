@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E2050BD41F311FDF006D23E6 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2050BD31F311FDF006D23E6 /* Triangle.swift */; };
 		E2050BD61F3122BB006D23E6 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2050BD51F3122BB006D23E6 /* Cube.swift */; };
 		E2050BD91F31683F006D23E6 /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2050BD81F31683F006D23E6 /* BufferProvider.swift */; };
+		E2050BDB1F31746D006D23E6 /* MetalTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2050BDA1F31746D006D23E6 /* MetalTexture.swift */; };
 		E2910F761F30744D0077A6D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F751F30744D0077A6D1 /* AppDelegate.swift */; };
 		E2910F781F30744D0077A6D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F771F30744D0077A6D1 /* ViewController.swift */; };
 		E2910F7B1F30744D0077A6D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2910F791F30744D0077A6D1 /* Main.storyboard */; };
@@ -23,9 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E2050BD31F311FDF006D23E6 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		E2050BD51F3122BB006D23E6 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		E2050BD81F31683F006D23E6 /* BufferProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferProvider.swift; sourceTree = "<group>"; };
+		E2050BDA1F31746D006D23E6 /* MetalTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTexture.swift; sourceTree = "<group>"; };
 		E2910F721F30744D0077A6D1 /* LokLokMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LokLokMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2910F751F30744D0077A6D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2910F771F30744D0077A6D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +56,6 @@
 		E2050BD21F311FB3006D23E6 /* Renderable */ = {
 			isa = PBXGroup;
 			children = (
-				E2050BD31F311FDF006D23E6 /* Triangle.swift */,
 				E2050BD51F3122BB006D23E6 /* Cube.swift */,
 			);
 			path = Renderable;
@@ -102,6 +101,7 @@
 				E2910F931F3082BC0077A6D1 /* Vertex.swift */,
 				E2910F951F3082F50077A6D1 /* Node.swift */,
 				E2050BD81F31683F006D23E6 /* BufferProvider.swift */,
+				E2050BDA1F31746D006D23E6 /* MetalTexture.swift */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -188,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2050BDB1F31746D006D23E6 /* MetalTexture.swift in Sources */,
 				E2050BD91F31683F006D23E6 /* BufferProvider.swift in Sources */,
 				E2910F8B1F307F2C0077A6D1 /* Shaders.metal in Sources */,
 				E2910F921F3081FD0077A6D1 /* Matrix4.m in Sources */,
@@ -197,7 +198,6 @@
 				E2050BD61F3122BB006D23E6 /* Cube.swift in Sources */,
 				E2910F941F3082BC0077A6D1 /* Vertex.swift in Sources */,
 				E2910F961F3082F50077A6D1 /* Node.swift in Sources */,
-				E2050BD41F311FDF006D23E6 /* Triangle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,6 @@ import Metal
 
 class BufferProvider {
     var avaliableResourcesSemaphore: DispatchSemaphore
-    
     // 1
     let inflightBuffersCount: Int
     // 2
