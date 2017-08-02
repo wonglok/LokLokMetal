@@ -14,6 +14,10 @@ struct LokVertex {
 }
 
 class Renderer: NSObject {
+    
+    var start = mach_absolute_time()
+    var deltaTime = mach_absolute_time()
+    
     let device: MTLDevice!
     let commandQueue: MTLCommandQueue!
     
@@ -24,7 +28,7 @@ class Renderer: NSObject {
     var objectToDraw: Cube!
     var projectionMatrix: Matrix4!
     
-
+    
 
     init(device: MTLDevice, view: UIView) {
         self.device = device
@@ -46,12 +50,6 @@ class Renderer: NSObject {
     
     func makeBuffers () {
         objectToDraw = Cube(device: device)
-        
-        objectToDraw.positionX =  0.0
-        objectToDraw.positionY =  0.0
-        objectToDraw.positionZ = -2.0
-        objectToDraw.rotationZ = Matrix4.degrees(toRad: 45);
-        objectToDraw.scale = 0.5
     }
     func makeLib () {
         // 1
@@ -68,25 +66,39 @@ class Renderer: NSObject {
         // 3
         pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
     }
+    
 }
 
 extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
-    
+
     func draw(in view: MTKView) {
+        
+        let end = mach_absolute_time()
+        let deltaTime = Float(end - start) * 0.00000001
+        start = end
+        
         guard   let drawable = view.currentDrawable // ,
                 //let descriptor = view.currentRenderPassDescriptor
                 //let commandBuffer = commandQueue.makeCommandBuffer(),
                 //let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         else { return }
         
+        let worldModelMatrix = Matrix4()
+        worldModelMatrix.translate(0.0, y: 0.0, z: -7.0)
+        worldModelMatrix.rotateAroundX(Matrix4.degrees(toRad: 25), y: 0.0, z: 0.0)
+        
+        objectToDraw.updateWithDelta(delta: deltaTime)
+        
         objectToDraw.render(
             commandQueue: commandQueue,
             pipelineState: pipelineState,
             drawable: drawable,
+            parentModelViewMatrix: worldModelMatrix,
             projectionMatrix: projectionMatrix,
             clearColor: nil
         )
+        
         
         
     }

@@ -17,6 +17,8 @@ struct Uniforms {
 
 class Node {
     
+    var time: Float = 0.0
+    
     let device: MTLDevice
     let name: String
     var vertexCount: Int
@@ -50,9 +52,10 @@ class Node {
         vertexCount = vertices.count
     }
     
-    func handleMatrix (renderEncoder: MTLRenderCommandEncoder, projectionMatrix: Matrix4) {
+    func handleMatrix (renderEncoder: MTLRenderCommandEncoder, projectionMatrix: Matrix4, parentModelViewMatrix: Matrix4) {
         // 1
         let nodeModelMatrix = self.modelMatrix()
+        nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
         
         let memoryLength = MemoryLayout<Float>.size * Matrix4.numberOfElements()
         
@@ -67,7 +70,18 @@ class Node {
         renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
     }
     
-    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, projectionMatrix: Matrix4, clearColor: MTLClearColor?){
+    func updateWithDelta (delta: Float) {
+        time += delta
+    }
+    
+    func render(
+        commandQueue: MTLCommandQueue,
+        pipelineState: MTLRenderPipelineState,
+        drawable: CAMetalDrawable,
+        parentModelViewMatrix: Matrix4,
+        projectionMatrix: Matrix4,
+        clearColor: MTLClearColor?
+    ) {
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -82,7 +96,9 @@ class Node {
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         
-        handleMatrix(renderEncoder: renderEncoder, projectionMatrix: projectionMatrix)
+        handleMatrix(renderEncoder: renderEncoder,
+                     projectionMatrix: projectionMatrix,
+                     parentModelViewMatrix: parentModelViewMatrix)
         
         renderEncoder.drawPrimitives(
                                         type: .triangle,
