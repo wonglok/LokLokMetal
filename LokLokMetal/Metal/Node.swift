@@ -14,7 +14,7 @@ import QuartzCore
 
 class Node {
     
-    let light = Light(color: (1.0,1.0,1.0), ambientIntensity: 0.2, direction: (0.0, 0.0, 1.0), diffuseIntensity: 0.8)
+    let light = Light(color: (1.0,1.0,1.0), ambientIntensity: 0.1, direction: (0.0, 0.0, 1.0), diffuseIntensity: 0.8, shininess: 10, specularIntensity: 2)
     
     var time: Float = 0.0
     
@@ -45,7 +45,7 @@ class Node {
         for vertex in vertices{
             vertexData += vertex.floatBuffer()
         }
-        
+
         // 2
         let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
         try! vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])

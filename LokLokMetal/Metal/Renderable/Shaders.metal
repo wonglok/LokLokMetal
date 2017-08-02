@@ -14,6 +14,8 @@ struct Light{
     float ambientIntensity;
     packed_float3 direction;
     float diffuseIntensity;
+    float shininess;
+    float specularIntensity;
 };
 
 // 1
@@ -29,6 +31,7 @@ struct VertexOut{
     float4 color;
     float2 texCoord;
     float3 normal;
+    float3 fragmentPosition;
 };
 
 struct Uniforms{
@@ -49,6 +52,7 @@ vertex VertexOut basic_vertex(
     
     VertexOut VertexOut;
     VertexOut.position = proj_Matrix * mv_Matrix * float4(VertexIn.position,1);
+    VertexOut.fragmentPosition = (mv_Matrix * float4(VertexIn.position,1)).xyz;
     VertexOut.color = VertexIn.color;
     // 2
     VertexOut.texCoord = VertexIn.texCoord;
@@ -68,7 +72,13 @@ fragment float4 basic_fragment(VertexOut         interpolated       [[stage_in]]
     float diffuseFactor = max(0.0,dot(interpolated.normal, light.direction)); // 1
     float4 diffuseColor = float4(light.color * light.diffuseIntensity * diffuseFactor ,1.0); // 2
     
+    //Specular
+    float3 eye = normalize(interpolated.fragmentPosition); //1
+    float3 reflection = reflect(light.direction, interpolated.normal); // 2
+    float specularFactor = pow(max(0.0, dot(reflection, eye)), light.shininess); //3
+    float4 specularColor = float4(light.color * light.specularIntensity * specularFactor ,1.0);//4
+
     
     float4 color =  interpolated.color * tex2D.sample(sampler2D, interpolated.texCoord);
-    return color * (ambientColor + diffuseColor);
+    return color * (ambientColor + diffuseColor + specularColor);
 }
