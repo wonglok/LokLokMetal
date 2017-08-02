@@ -9,11 +9,8 @@
 import Foundation
 import Metal
 import MetalKit
+import GLKit
 import QuartzCore
-
-struct Uniforms {
-    
-}
 
 class Node {
     
@@ -23,6 +20,10 @@ class Node {
     let name: String
     var vertexCount: Int
     var vertexBuffer: MTLBuffer!
+    
+    var bufferProvider: BufferProvider
+    
+    var nodeModelMatrix: Matrix4!
     
     var positionX: Float = 0.0
     var positionY: Float = 0.0
@@ -34,7 +35,6 @@ class Node {
     var scale: Float     = 1.0
     
     init(name: String, vertices: [Vertex], device: MTLDevice){
-        
         // 1
         var vertexData = [Float]()
         for vertex in vertices{
@@ -43,30 +43,27 @@ class Node {
         
         // 2
         let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
-        
         try! vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
-       
+
         // 3
         self.name = name
         self.device = device
         vertexCount = vertices.count
+        
+        self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBuffer: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2)
+        prepMatrix()
+    }
+    
+    func prepMatrix () {
+        nodeModelMatrix = modelMatrix()
     }
     
     func handleMatrix (renderEncoder: MTLRenderCommandEncoder, projectionMatrix: Matrix4, parentModelViewMatrix: Matrix4) {
         // 1
-        let nodeModelMatrix = self.modelMatrix()
+        nodeModelMatrix = modelMatrix()
         nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
         
-        let memoryLength = MemoryLayout<Float>.size * Matrix4.numberOfElements()
-        
-        // 2
-        let uniformBuffer = device.makeBuffer(length: memoryLength * 2, options: [])
-        
-        let uniformPointer = uniformBuffer?.contents()
-        
-        memcpy(uniformPointer, nodeModelMatrix.raw(), memoryLength)
-        memcpy(uniformPointer?.advanced(by: memoryLength), projectionMatrix.raw(), memoryLength)
-        
+        let uniformBuffer = bufferProvider.nextUniformsBuffer(projectionMatrix: projectionMatrix, modelViewMatrix: nodeModelMatrix)
         renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
     }
     
@@ -82,6 +79,7 @@ class Node {
         projectionMatrix: Matrix4,
         clearColor: MTLClearColor?
     ) {
+        bufferProvider.configTryWait()
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -91,8 +89,11 @@ class Node {
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         
         let commandBuffer = commandQueue.makeCommandBuffer()!
+        bufferProvider.configResourceRestore(commandBuffer: commandBuffer)
         
         let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
+        renderEncoder.setCullMode(MTLCullMode.front)
+        
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         

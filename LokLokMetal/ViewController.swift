@@ -49,6 +49,7 @@ class ViewController: UIViewController {
         
         metalView.clearColor =  Colors.wenderlichGreen
         renderer = Renderer(device: device, view: view)
+        metalView.preferredFramesPerSecond = 120
         metalView.delegate = renderer
     }
 }

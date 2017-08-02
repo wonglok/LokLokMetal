@@ -29,14 +29,13 @@ class Renderer: NSObject {
     var projectionMatrix: Matrix4!
     
     
-
     init(device: MTLDevice, view: UIView) {
         self.device = device
         commandQueue = device.makeCommandQueue()
         super.init()
         makeLib()
         makeCamera(view: view)
-        makeBuffers()
+        makeRenderable()
     }
     
     func makeCamera (view: UIView) {
@@ -48,7 +47,7 @@ class Renderer: NSObject {
         )
     }
     
-    func makeBuffers () {
+    func makeRenderable () {
         objectToDraw = Cube(device: device)
     }
     func makeLib () {
