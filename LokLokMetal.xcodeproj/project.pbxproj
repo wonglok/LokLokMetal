@@ -56,6 +56,7 @@
 		E2050BD21F311FB3006D23E6 /* Renderable */ = {
 			isa = PBXGroup;
 			children = (
+				E2910F8A1F307F2C0077A6D1 /* Shaders.metal */,
 				E2050BD51F3122BB006D23E6 /* Cube.swift */,
 			);
 			path = Renderable;
@@ -97,7 +98,6 @@
 			children = (
 				E2050BD21F311FB3006D23E6 /* Renderable */,
 				E2910F881F3077090077A6D1 /* Renderer.swift */,
-				E2910F8A1F307F2C0077A6D1 /* Shaders.metal */,
 				E2910F931F3082BC0077A6D1 /* Vertex.swift */,
 				E2910F951F3082F50077A6D1 /* Node.swift */,
 				E2050BD81F31683F006D23E6 /* BufferProvider.swift */,

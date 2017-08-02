@@ -13,8 +13,34 @@ struct LokVertex {
     var color: vector_float4
 }
 
+class Inertia {
+    var mass: Float  = 3.0
+    var reducer: Float = 0.98
+    var inertia: Float = 0.0
+    var stopper: Float = 0.001
+    
+    var dx: Float = 0.0
+    var dy: Float = 0.0
+    
+    func move (dx x: Float, dy y: Float) {
+        inertia = mass
+        dx = x
+        dy = y
+    }
+    func reduce () {
+        if (inertia >= stopper) {
+            inertia = inertia * reducer
+        } else {
+            inertia = 0.0
+        }
+    }
+}
+
 class Renderer: NSObject {
     
+    var inertiaSim: Inertia = Inertia()
+    
+    var view : UIView!
     var start = mach_absolute_time()
     var deltaTime = mach_absolute_time()
     
@@ -27,7 +53,6 @@ class Renderer: NSObject {
 //    var objectToDraw: Triangle!
     var objectToDraw: Cube!
     var projectionMatrix: Matrix4!
-    
     
     init(device: MTLDevice, view: UIView) {
         self.device = device
@@ -69,15 +94,20 @@ class Renderer: NSObject {
 }
 
 extension Renderer: MTKViewDelegate {
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        view.autoResizeDrawable = true
+        makeCamera(view: view)
+    }
 
     func draw(in view: MTKView) {
+        
+        inertiaSim.reduce()
         
         let end = mach_absolute_time()
         let deltaTime = Float(end - start) * 0.00000001
         start = end
         
-        guard   let drawable = view.currentDrawable // ,
+        guard   let drawable = view.currentDrawable//,
                 //let descriptor = view.currentRenderPassDescriptor
                 //let commandBuffer = commandQueue.makeCommandBuffer(),
                 //let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
@@ -87,7 +117,7 @@ extension Renderer: MTKViewDelegate {
         worldModelMatrix.translate(0.0, y: 0.0, z: -7.0)
         worldModelMatrix.rotateAroundX(Matrix4.degrees(toRad: 25), y: 0.0, z: 0.0)
         
-        objectToDraw.updateWithDelta(delta: deltaTime)
+        objectToDraw.update(delta: deltaTime, inertiaSim: inertiaSim)
         
         objectToDraw.render(
             commandQueue: commandQueue,

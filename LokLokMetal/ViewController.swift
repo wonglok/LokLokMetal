@@ -31,14 +31,41 @@ enum Colors {
 
 }
 
-
 class ViewController: UIViewController {
+    
+    let panSensivity:Float = 5.0
+    var lastPanLocation: CGPoint!
     
     var metalView: MTKView {
         return view as! MTKView
     }
 
     var renderer: Renderer?
+    
+    func setupGestures(){
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(ViewController.pan))
+        self.view.addGestureRecognizer(pan)
+    }
+    
+    @objc func pan(panGesture: UIPanGestureRecognizer){
+        if panGesture.state == UIGestureRecognizerState.changed {
+            
+            
+            let pointInView = panGesture.location(in: self.view)
+            // 3
+            let xDelta = Float((lastPanLocation.x - pointInView.x)/self.view.bounds.width) * panSensivity
+            let yDelta = Float((lastPanLocation.y - pointInView.y)/self.view.bounds.height) * panSensivity
+            // 4
+//            renderer?.objectToDraw.rotationY -= xDelta
+//            renderer?.objectToDraw.rotationX -= yDelta
+            
+            renderer?.inertiaSim.move(dx: xDelta, dy: yDelta)
+            
+            lastPanLocation = pointInView
+        } else if panGesture.state == UIGestureRecognizerState.began {
+            lastPanLocation = panGesture.location(in: self.view)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +78,7 @@ class ViewController: UIViewController {
         renderer = Renderer(device: device, view: view)
         metalView.preferredFramesPerSecond = 120
         metalView.delegate = renderer
+        setupGestures()
     }
 }
 

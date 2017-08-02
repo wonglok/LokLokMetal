@@ -70,13 +70,16 @@ class Cube: Node {
         super.init(name: "Cube", vertices: verticesArray, device: device, texture: texture.texture)
     }
     
-    override func updateWithDelta(delta: Float) {
-        
+    func update(delta: Float, inertiaSim: Inertia) {
+
         super.updateWithDelta(delta: delta)
         
-        let secsPerMove: Float = 6.0
-        rotationY = sinf( Float(time) * 2.0 * Float.pi / secsPerMove)
-        rotationX = sinf( Float(time) * 2.0 * Float.pi / secsPerMove)
+        rotationX = rotationX - inertiaSim.dy * inertiaSim.inertia
+        rotationY = rotationY - inertiaSim.dx * inertiaSim.inertia
+//
+//        let secsPerMove: Float = 6.0
+//        rotationY = sinf( Float(time) * 2.0 * Float.pi / secsPerMove)
+//        rotationX = sinf( Float(time) * 2.0 * Float.pi / secsPerMove)
     }
     
 }
