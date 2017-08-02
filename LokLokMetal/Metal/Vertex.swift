@@ -14,8 +14,14 @@ struct Vertex{
     var r,g,b,a: Float   // color data
     var s,t: Float       // texture coordinates
     
-    func floatBuffer() -> [Float] {
-        return [x,y,z,r,g,b,a,s,t]
-    }
+    var nX,nY,nZ: Float  // normal
     
+    func floatBuffer() -> [Float] {
+        return [
+                x,y,z,
+                r,g,b,a,
+                s,t,
+                nX,nY,nZ
+        ]
+    }
 };

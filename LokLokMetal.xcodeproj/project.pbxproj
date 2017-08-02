@@ -20,6 +20,8 @@
 		E2910F921F3081FD0077A6D1 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = E2910F901F3081FD0077A6D1 /* Matrix4.m */; };
 		E2910F941F3082BC0077A6D1 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F931F3082BC0077A6D1 /* Vertex.swift */; };
 		E2910F961F3082F50077A6D1 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F951F3082F50077A6D1 /* Node.swift */; };
+		E2A303EC1F32814600422B0E /* Inertia.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A303EB1F32814600422B0E /* Inertia.swift */; };
+		E2A303EE1F3284B600422B0E /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A303ED1F3284B600422B0E /* Light.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		E2910F911F3081FD0077A6D1 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Matrix4.h; path = ../../../../../../../../AppleData/Download/matrix4_Metal_2/Matrix4.h; sourceTree = "<group>"; };
 		E2910F931F3082BC0077A6D1 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		E2910F951F3082F50077A6D1 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		E2A303EB1F32814600422B0E /* Inertia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inertia.swift; sourceTree = "<group>"; };
+		E2A303ED1F3284B600422B0E /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 				E2910F951F3082F50077A6D1 /* Node.swift */,
 				E2050BD81F31683F006D23E6 /* BufferProvider.swift */,
 				E2050BDA1F31746D006D23E6 /* MetalTexture.swift */,
+				E2A303EB1F32814600422B0E /* Inertia.swift */,
+				E2A303ED1F3284B600422B0E /* Light.swift */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -194,7 +200,9 @@
 				E2910F921F3081FD0077A6D1 /* Matrix4.m in Sources */,
 				E2910F781F30744D0077A6D1 /* ViewController.swift in Sources */,
 				E2910F891F3077090077A6D1 /* Renderer.swift in Sources */,
+				E2A303EE1F3284B600422B0E /* Light.swift in Sources */,
 				E2910F761F30744D0077A6D1 /* AppDelegate.swift in Sources */,
+				E2A303EC1F32814600422B0E /* Inertia.swift in Sources */,
 				E2050BD61F3122BB006D23E6 /* Cube.swift in Sources */,
 				E2910F941F3082BC0077A6D1 /* Vertex.swift in Sources */,
 				E2910F961F3082F50077A6D1 /* Node.swift in Sources */,

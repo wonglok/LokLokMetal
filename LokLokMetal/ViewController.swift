@@ -33,7 +33,7 @@ enum Colors {
 
 class ViewController: UIViewController {
     
-    let panSensivity:Float = 5.0
+    let panSensivity:Float = 5
     var lastPanLocation: CGPoint!
     
     var metalView: MTKView {
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
             fatalError("Device not created. Run on a physical device")
         }
         
-        metalView.clearColor =  Colors.wenderlichGreen
+        //metalView.clearColor =  Colors.wenderlichGreen
         renderer = Renderer(device: device, view: view)
         metalView.preferredFramesPerSecond = 120
         metalView.delegate = renderer

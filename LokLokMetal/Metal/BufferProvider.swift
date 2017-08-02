@@ -49,7 +49,7 @@ class BufferProvider {
         }
     }
     
-    func nextUniformsBuffer(projectionMatrix: Matrix4, modelViewMatrix: Matrix4) -> MTLBuffer {
+    func nextUniformsBuffer(projectionMatrix: Matrix4, modelViewMatrix: Matrix4, light: Light) -> MTLBuffer {
         
         // 1
         let buffer = uniformsBuffers[avaliableBufferIndex]
@@ -59,8 +59,9 @@ class BufferProvider {
         
         // 3
         memcpy(bufferPointer,                                modelViewMatrix.raw(),  matrixMemorySize)
-        memcpy(bufferPointer.advanced(by: matrixMemorySize), projectionMatrix.raw(), matrixMemorySize)
-        
+        memcpy(bufferPointer.advanced(by: matrixMemorySize * 1), projectionMatrix.raw(), matrixMemorySize)
+        memcpy(bufferPointer.advanced(by: matrixMemorySize * 2), light.raw(), Light.size())
+
         // 4
         avaliableBufferIndex += 1
         if avaliableBufferIndex == inflightBuffersCount{
