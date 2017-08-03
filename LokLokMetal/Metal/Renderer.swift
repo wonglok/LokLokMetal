@@ -14,6 +14,7 @@ struct LokVertex {
 }
 
 class Renderer: NSObject {
+    var textureLoader: MTKTextureLoader! = nil
     
     var inertiaSim: Inertia = Inertia()
     
@@ -35,6 +36,8 @@ class Renderer: NSObject {
         self.device = device
         commandQueue = device.makeCommandQueue()
         super.init()
+        textureLoader = MTKTextureLoader(device: device)
+        
         makeLib()
         makeCamera(view: view)
         makeRenderable()
@@ -50,7 +53,7 @@ class Renderer: NSObject {
     }
     
     func makeRenderable () {
-        objectToDraw = Cube(device: device, commandQ:commandQueue)
+        objectToDraw = Cube(device: device, commandQ: commandQueue, textureLoader: textureLoader)
     }
     func makeLib () {
         // 1

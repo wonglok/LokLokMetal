@@ -10,11 +10,11 @@
 // https://koenig-media.raywenderlich.com/uploads/2014/10/Cube__PSF_.png
 
 import Foundation
-import Metal
+import MetalKit
 
 class Cube: Node {
     
-    init(device: MTLDevice, commandQ: MTLCommandQueue){
+    init(device: MTLDevice, commandQ: MTLCommandQueue, textureLoader :MTKTextureLoader) {
         // 1
         
         //Front
@@ -64,10 +64,13 @@ class Cube: Node {
         ]
         
         //3
-        let texture = MetalTexture(resourceName: "cube", ext: "png", mipmaped: true)
-        texture.loadTexture(device: device, commandQ: commandQ, flip: true)
+//        let path = Bundle.main.path(forResource: "cube", ofType: "png")!
+//        let data = NSData(contentsOfFile: path) as! Data
+//        let texture = try! textureLoader.newTexture(with: data, options: [MTKTextureLoader.Option.SRGB : (false as NSNumber)])
+//
         
-        super.init(name: "Cube", vertices: verticesArray, device: device, texture: texture.texture)
+        let texture = try! textureLoader.newTexture(withName: "cube", scaleFactor: 1.0, bundle: nil, options: nil)
+        super.init(name: "Cube", vertices: verticesArray, device: device, texture: texture)
     }
     
     func update(delta: Float, inertiaSim: Inertia) {
