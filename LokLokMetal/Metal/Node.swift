@@ -5,12 +5,13 @@
 //  Created by LOK on 1/8/2017.
 //  Copyright © 2017 WONG LOK. All rights reserved.
 //
-
+import simd
 import Foundation
 import Metal
 import MetalKit
 import GLKit
 import QuartzCore
+
 
 class Node {
     
@@ -25,7 +26,7 @@ class Node {
     
     var bufferProvider: BufferProvider
     
-    var nodeModelMatrix: Matrix4!
+    var nodeModelMatrix: float4x4!
     
     var positionX: Float = 0.0
     var positionY: Float = 0.0
@@ -57,9 +58,9 @@ class Node {
         
         self.texture = texture
         
-//        self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBuffer: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2)
+//        self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBuffer: MemoryLayout<Float>.size * float4x4.numberOfElements() * 2)
         
-        let sizeOfUniformsBuffer = MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2 + Light.size()
+        let sizeOfUniformsBuffer = MemoryLayout<Float>.size * float4x4.numberOfElements() * 2 + Light.size()
         self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBuffer: sizeOfUniformsBuffer)
         
         
@@ -71,7 +72,7 @@ class Node {
         nodeModelMatrix = modelMatrix()
     }
     
-    func handleMatrix (renderEncoder: MTLRenderCommandEncoder, projectionMatrix: Matrix4, parentModelViewMatrix: Matrix4) {
+    func handleMatrix (renderEncoder: MTLRenderCommandEncoder, projectionMatrix: float4x4, parentModelViewMatrix: float4x4) {
         // 1
         nodeModelMatrix = modelMatrix()
         nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
@@ -89,8 +90,8 @@ class Node {
         commandQueue: MTLCommandQueue,
         pipelineState: MTLRenderPipelineState,
         drawable: CAMetalDrawable,
-        parentModelViewMatrix: Matrix4,
-        projectionMatrix: Matrix4,
+        parentModelViewMatrix: float4x4,
+        projectionMatrix: float4x4,
         clearColor: MTLClearColor?
     ) {
         bufferProvider.configTryWait()
@@ -133,8 +134,8 @@ class Node {
         commandBuffer.commit()
     }
     
-    func modelMatrix() -> Matrix4 {
-        let matrix = Matrix4()
+    func modelMatrix() -> float4x4 {
+        var matrix = matrix_identity_float4x4
         matrix.translate(positionX, y: positionY, z: positionZ)
         matrix.rotateAroundX(rotationX, y: rotationY, z: rotationZ)
         matrix.scale(scale, y: scale, z: scale)

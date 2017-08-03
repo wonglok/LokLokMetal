@@ -17,11 +17,11 @@
 		E2910F801F30744D0077A6D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2910F7E1F30744D0077A6D1 /* LaunchScreen.storyboard */; };
 		E2910F891F3077090077A6D1 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F881F3077090077A6D1 /* Renderer.swift */; };
 		E2910F8B1F307F2C0077A6D1 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = E2910F8A1F307F2C0077A6D1 /* Shaders.metal */; };
-		E2910F921F3081FD0077A6D1 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = E2910F901F3081FD0077A6D1 /* Matrix4.m */; };
 		E2910F941F3082BC0077A6D1 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F931F3082BC0077A6D1 /* Vertex.swift */; };
 		E2910F961F3082F50077A6D1 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910F951F3082F50077A6D1 /* Node.swift */; };
 		E2A303EC1F32814600422B0E /* Inertia.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A303EB1F32814600422B0E /* Inertia.swift */; };
 		E2A303EE1F3284B600422B0E /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A303ED1F3284B600422B0E /* Light.swift */; };
+		E2A303F01F3298CD00422B0E /* float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A303EF1F3298CD00422B0E /* float4x4+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,13 +37,11 @@
 		E2910F811F30744D0077A6D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2910F881F3077090077A6D1 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		E2910F8A1F307F2C0077A6D1 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		E2910F8F1F3081FB0077A6D1 /* LokLokMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LokLokMetal-Bridging-Header.h"; sourceTree = "<group>"; };
-		E2910F901F3081FD0077A6D1 /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Matrix4.m; path = ../../../../../../../../AppleData/Download/matrix4_Metal_2/Matrix4.m; sourceTree = "<group>"; };
-		E2910F911F3081FD0077A6D1 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Matrix4.h; path = ../../../../../../../../AppleData/Download/matrix4_Metal_2/Matrix4.h; sourceTree = "<group>"; };
 		E2910F931F3082BC0077A6D1 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		E2910F951F3082F50077A6D1 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		E2A303EB1F32814600422B0E /* Inertia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inertia.swift; sourceTree = "<group>"; };
 		E2A303ED1F3284B600422B0E /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
+		E2A303EF1F3298CD00422B0E /* float4x4+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "float4x4+Extensions.swift"; path = "../../../../../../../../AppleData/Download/Resources/float4x4+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,9 +113,7 @@
 		E2910F8C1F3081BC0077A6D1 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				E2910F911F3081FD0077A6D1 /* Matrix4.h */,
-				E2910F901F3081FD0077A6D1 /* Matrix4.m */,
-				E2910F8F1F3081FB0077A6D1 /* LokLokMetal-Bridging-Header.h */,
+				E2A303EF1F3298CD00422B0E /* float4x4+Extensions.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -195,9 +191,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2050BDB1F31746D006D23E6 /* MetalTexture.swift in Sources */,
+				E2A303F01F3298CD00422B0E /* float4x4+Extensions.swift in Sources */,
 				E2050BD91F31683F006D23E6 /* BufferProvider.swift in Sources */,
 				E2910F8B1F307F2C0077A6D1 /* Shaders.metal in Sources */,
-				E2910F921F3081FD0077A6D1 /* Matrix4.m in Sources */,
 				E2910F781F30744D0077A6D1 /* ViewController.swift in Sources */,
 				E2910F891F3077090077A6D1 /* Renderer.swift in Sources */,
 				E2A303EE1F3284B600422B0E /* Light.swift in Sources */,
@@ -348,7 +344,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wonglok.LokLokMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "LokLokMetal/SupportingFiles/LokLokMetal-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -365,7 +360,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wonglok.LokLokMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "LokLokMetal/SupportingFiles/LokLokMetal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

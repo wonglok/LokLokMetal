@@ -5,7 +5,7 @@
 //  Created by LOK on 2/8/2017.
 //  Copyright © 2017 WONG LOK. All rights reserved.
 //
-
+import simd
 import Foundation
 import Metal
 
@@ -18,7 +18,7 @@ class BufferProvider {
     // 3
     private var avaliableBufferIndex: Int = 0
     
-    let matrixMemorySize = MemoryLayout<Float>.size * Matrix4.numberOfElements()
+    let matrixMemorySize = MemoryLayout<Float>.size * float4x4.numberOfElements()
     
     init(device:MTLDevice, inflightBuffersCount: Int, sizeOfUniformsBuffer: Int) {
         
@@ -49,7 +49,10 @@ class BufferProvider {
         }
     }
     
-    func nextUniformsBuffer(projectionMatrix: Matrix4, modelViewMatrix: Matrix4, light: Light) -> MTLBuffer {
+    func nextUniformsBuffer(projectionMatrix: float4x4, modelViewMatrix: float4x4, light: Light) -> MTLBuffer {
+        
+        var projectionMatrix = projectionMatrix
+        var modelViewMatrix = modelViewMatrix
         
         // 1
         let buffer = uniformsBuffers[avaliableBufferIndex]
@@ -58,8 +61,8 @@ class BufferProvider {
         let bufferPointer = buffer.contents()
         
         // 3
-        memcpy(bufferPointer,                                modelViewMatrix.raw(),  matrixMemorySize)
-        memcpy(bufferPointer.advanced(by: matrixMemorySize * 1), projectionMatrix.raw(), matrixMemorySize)
+        memcpy(bufferPointer,                                &modelViewMatrix,  matrixMemorySize)
+        memcpy(bufferPointer.advanced(by: matrixMemorySize * 1), &projectionMatrix, matrixMemorySize)
         memcpy(bufferPointer.advanced(by: matrixMemorySize * 2), light.raw(), Light.size())
 
         // 4

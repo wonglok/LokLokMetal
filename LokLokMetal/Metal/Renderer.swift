@@ -5,7 +5,7 @@
 //  Created by LOK on 1/8/2017.
 //  Copyright © 2017 WONG LOK. All rights reserved.
 //
-
+import simd
 import MetalKit
 
 struct LokVertex {
@@ -29,7 +29,7 @@ class Renderer: NSObject {
     
 //    var objectToDraw: Triangle!
     var objectToDraw: Cube!
-    var projectionMatrix: Matrix4!
+    var projectionMatrix: float4x4!
     
     init(device: MTLDevice, view: UIView) {
         self.device = device
@@ -41,8 +41,8 @@ class Renderer: NSObject {
     }
     
     func makeCamera (view: UIView) {
-        projectionMatrix = Matrix4.makePerspectiveViewAngle(
-            Matrix4.degrees(toRad: 85.0),
+        projectionMatrix = float4x4.makePerspectiveViewAngle(
+            float4x4.degrees(toRad: 85.0),
             aspectRatio: Float(view.bounds.size.width / view.bounds.size.height),
             nearZ: 0.01,
             farZ: 100.0
@@ -90,9 +90,9 @@ extension Renderer: MTKViewDelegate {
                 //let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
         else { return }
         
-        let worldModelMatrix = Matrix4()
+        var worldModelMatrix = float4x4()
         worldModelMatrix.translate(0.0, y: 0.0, z: -7.0)
-        worldModelMatrix.rotateAroundX(Matrix4.degrees(toRad: 25), y: 0.0, z: 0.0)
+        worldModelMatrix.rotateAroundX(float4x4.degrees(toRad: 25), y: 0.0, z: 0.0)
         
         objectToDraw.update(delta: deltaTime, inertiaSim: inertiaSim)
         
